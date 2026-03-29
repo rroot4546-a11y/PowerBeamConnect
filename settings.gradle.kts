@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "PowerBeam Connect"
+rootProject.name = "PowerBeamConnect"
 include(":app")
