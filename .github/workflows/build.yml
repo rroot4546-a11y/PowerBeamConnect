@@ -27,25 +27,24 @@ jobs:
       run: chmod +x gradlew
     
     - name: Build Debug APK
-      run: |
-        ./gradlew assembleDebug --stacktrace --info 2>&1 | tee build.log
-      continue-on-error: true
+      run: ./gradlew assembleDebug --no-daemon
     
-    - name: Show build log on failure
-      if: failure()
-      run: cat build.log | tail -200
+    - name: Verify APK exists
+      run: |
+        ls -la app/build/outputs/apk/debug/
+        if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
+          echo "APK found!"
+          ls -lh app/build/outputs/apk/debug/app-debug.apk
+        else
+          echo "APK NOT FOUND!"
+          find . -name "*.apk" -type f
+          exit 1
+        fi
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug
+        name: PowerBeamConnect-debug
         path: app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 7
-      if: success()
-    
-    - name: Upload build log
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-log
-        path: build.log
-        retention-days: 7
+        retention-days: 30
+        if-no-files-found: error
