@@ -15,7 +15,8 @@ data class WifiScanResult(
     val frequency: Int,
     val level: Int,
     val capabilities: String,
-    val isPowerBeam: Boolean
+    val isPowerBeam: Boolean,
+    val signalStrength: String = ""
 )
 
 class WifiAdapter(
@@ -30,6 +31,7 @@ class WifiAdapter(
         val tvSignal: TextView = view.findViewById(R.id.tvSignal)
         val tvLock: TextView = view.findViewById(R.id.tvLock)
         val ivIcon: ImageView = view.findViewById(R.id.ivIcon)
+        val tvPowerBeamBadge: TextView = view.findViewById(R.id.tvPowerBeamBadge)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WifiViewHolder {
@@ -40,24 +42,44 @@ class WifiAdapter(
 
     override fun onBindViewHolder(holder: WifiViewHolder, position: Int) {
         val network = networks[position]
-        
+
+        // Network SSID
         holder.tvSsid.text = network.ssid
-        holder.tvFreq.text = "${network.frequency / 1000} GHz"
+
+        // Frequency
+        val freqGHz = network.frequency / 1000.0
+        holder.tvFreq.text = String.format("%.1f GHz", freqGHz)
+
+        // Signal strength emoji and level
         holder.tvSignal.text = getSignalEmoji(network.level)
-        
-        // Lock icon
-        holder.tvLock.visibility = if (network.capabilities.contains("WPA") || network.capabilities.contains("WEP")) 
-            View.VISIBLE else View.GONE
-        
-        // PowerBeam highlight
-        if (network.isPowerBeam) {
-            holder.card.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.powerbeam_bg))
-            holder.ivIcon.setImageResource(R.drawable.ic_satellite)
+
+        // Lock icon - show if WPA/WEP/WPA3
+        holder.tvLock.visibility = if (
+            network.capabilities.contains("WPA", ignoreCase = true) ||
+            network.capabilities.contains("WEP", ignoreCase = true)
+        ) {
+            View.VISIBLE
         } else {
-            holder.card.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.card_bg))
-            holder.ivIcon.setImageResource(R.drawable.ic_wifi)
+            View.GONE
         }
-        
+
+        // PowerBeam highlighting
+        if (network.isPowerBeam) {
+            holder.card.setCardBackgroundColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.powerbeam_bg)
+            )
+            holder.ivIcon.setImageResource(R.drawable.ic_satellite)
+            holder.tvPowerBeamBadge.visibility = View.VISIBLE
+            holder.tvPowerBeamBadge.text = "⭐ PowerBeam"
+        } else {
+            holder.card.setCardBackgroundColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.card_bg)
+            )
+            holder.ivIcon.setImageResource(R.drawable.ic_wifi)
+            holder.tvPowerBeamBadge.visibility = View.GONE
+        }
+
+        // Click listener for connection
         holder.itemView.setOnClickListener { onItemClick(network) }
     }
 

@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PowerBeam Connect</string>
+    <string name="header_title">📡 PowerBeam Connect</string>
+    <string name="status_scanning">Scanning for networks...</string>
+    <string name="status_scan_complete">Scan complete</string>
+    <string name="status_connecting">Connecting to %s...</string>
+    <string name="status_connected">✅ Connected!</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="btn_scan">🔄 Scan Again</string>
+    <string name="btn_connect">Connect</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="dialog_password_title">Enter password for %s</string>
+    <string name="error_wifi_disabled">Please enable WiFi first</string>
+    <string name="error_permissions">Permissions required for WiFi scan</string>
+    <string name="error_connection_failed">Connection failed</string>
+    <string name="found_networks">Found %d networks</string>
+    <string name="network_description">%d GHz • %s signal</string>
+    <string name="powerbeam_network">PowerBeam Network</string>
 </resources>

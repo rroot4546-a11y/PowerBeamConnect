@@ -4,68 +4,100 @@
     android:id="@+id/cardNetwork"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginBottom="10dp"
+    android:foreground="?selectableItemBackground"
     app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    android:foreground="?selectableItemBackground">
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:padding="16dp">
 
-        <!-- Icon -->
+        <!-- Icon (WiFi or Satellite) -->
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_satellite"
-            android:contentDescription="Network icon" />
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:contentDescription="Network icon"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_wifi"
+            android:tint="@color/primary" />
 
-        <!-- Network Info -->
+        <!-- Network Information -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            android:orientation="vertical">
 
+            <!-- SSID -->
             <TextView
                 android:id="@+id/tvSsid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Network Name"
+                android:textColor="#ffffff"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#ffffff" />
+                android:textStyle="bold" />
 
+            <!-- Frequency and Details Row -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="4dp">
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
+                <!-- Frequency -->
                 <TextView
                     android:id="@+id/tvFreq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 GHz"
-                    android:textSize="13sp"
-                    android:textColor="#a0a0a0" />
+                    android:text="5.0 GHz"
+                    android:textColor="#a0a0a0"
+                    android:textSize="12sp" />
 
+                <!-- Separator -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="•"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
+
+                <!-- Signal Strength Emoji -->
                 <TextView
                     android:id="@+id/tvSignal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="📶"
-                    android:textSize="16sp"
-                    android:layout_marginStart="8dp" />
+                    android:textSize="14sp" />
+
+                <!-- PowerBeam Badge -->
+                <TextView
+                    android:id="@+id/tvPowerBeamBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="⭐ PowerBeam"
+                    android:textColor="#ffc107"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Lock Icon -->
+        <!-- Lock Icon (if secured) -->
         <TextView
             android:id="@+id/tvLock"
             android:layout_width="wrap_content"
