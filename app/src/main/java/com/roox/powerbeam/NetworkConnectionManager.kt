@@ -81,7 +81,8 @@ class NetworkConnectionManager(
                     specifier.setWpa2Passphrase(password)
                 }
                 network.capabilities.contains("WEP") -> {
-                    specifier.setWepKey(0, password.toByteArray())
+                    // WEP is deprecated and not supported by WifiNetworkSpecifier
+                    specifier.setWpa2Passphrase(password)
                 }
                 else -> {
                     // Open network
